@@ -21,13 +21,13 @@ As the maintainer, I can publish this source without disclosing personal browsin
 
 ## Acceptance Criteria
 
-- [ ] Fresh public history, public Git defaults and no personal project/allowlist rules.
-- [ ] Company-specific page classifiers removed, generic core behavior preserved and tested.
-- [ ] MIT license, installation instructions, privacy, security and contributor documentation included.
-- [ ] Public npm lockfile and immutable official CI action references.
-- [ ] Mechanical public-source checks and a reviewed installable archive.
-- [ ] Independent review has no unresolved blocker; code/test review ≤2 rounds.
-- [ ] Public repository, versioned release asset and CI verified.
+- [x] Fresh public history, public Git defaults and no personal project/allowlist rules.
+- [x] Company-specific page classifiers removed, generic core behavior preserved and tested.
+- [x] MIT license, installation instructions, privacy, security and contributor documentation included.
+- [x] Public npm lockfile and immutable official CI action references.
+- [x] Mechanical public-source checks and a reviewed installable archive.
+- [x] Independent review has no unresolved blocker; code/test review ≤2 rounds.
+- [x] Public repository, versioned release asset and CI verified.
 
 ## Non-Goals
 

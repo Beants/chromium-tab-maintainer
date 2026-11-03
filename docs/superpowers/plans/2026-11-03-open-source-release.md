@@ -10,8 +10,8 @@
 
 No private history or artifacts; no new runtime dependency/permission; all gates and coverage ≥80%; independently review before public creation/push; code review ≤2 rounds.
 
-- [ ] Export source/tests/scripts only; replace personal fixtures and remove company-only defaults/classifiers.
-- [ ] Add MIT, bilingual README, privacy/security/contributor docs, public-source checks and pinned CI workflow.
-- [ ] Install from public registry, pass lint/types/tests/coverage/audit/package, inspect the archive and independent review.
-- [ ] Create the owner's public repository, push clean main, publish v1.0.0 ZIP and verify CI/anonymous access.
-- [ ] Record aggregate validation and final repository/release identity, preserving the separate local deployment.
+- [x] Export source/tests/scripts only; replace personal fixtures and remove company-only defaults/classifiers.
+- [x] Add MIT, bilingual README, privacy/security/contributor docs, public-source checks and pinned CI workflow.
+- [x] Install from public registry, pass lint/types/tests/coverage/audit/package, inspect the archive and independent review.
+- [x] Create the owner's public repository, push clean main, publish v1.0.0 ZIP and verify CI/anonymous access.
+- [x] Record aggregate validation and final repository/release identity, preserving the separate local deployment.
