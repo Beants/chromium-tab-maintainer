@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chromium Tab Maintainer</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header><h1>标签页自动整理</h1><p>仅在本机整理标签页。Chrome 系列浏览器按窗口隔离；安装后默认暂停。</p></header>
+    <section class="operation-panel" aria-label="整理操作">
+      <div class="actions"><button type="button" id="run-button">立即整理一次</button><button type="button" id="preview-button" class="secondary">预览</button><button type="button" id="pause">立即暂停</button><button type="submit" form="settings" id="save-button" class="secondary">保存设置</button></div>
+      <div id="run-progress" class="operation-progress" hidden>
+        <div class="progress-heading"><strong id="progress-label">等待开始</strong><span id="progress-count"></span></div>
+        <progress id="progress-meter" aria-labelledby="progress-label" max="1"></progress>
+        <p id="progress-detail" class="hint"></p>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
+    </section>
+    <form id="settings">
+      <section><h2>运行控制</h2>
+        <label><input type="checkbox" name="enabled"> 启用自动维护</label>
+        <label><input type="checkbox" name="spaceMappingVerified"> 空间隔离测试已完成</label>
+        <p class="hint">启用后，每个 窗口 独立维护。请先在两个测试 窗口 中核对页面成员和当前页：不会跨 窗口 移动，也不会因另一 窗口 的重复网址而关闭页面；各 窗口 内符合条件的页面都可能整理。未勾选时仅可预览。</p>
+        <p class="hint">扩展只能识别页面暴露的部分播放或捕获信号，无法全局发现其他应用或网站正在共享屏幕。如正在共享或录制，请点“立即暂停”。</p>
+        <div class="switches"><label><input type="checkbox" name="deduplicate"> 自动去重</label><label><input type="checkbox" name="consolidateHost"> 清理超过1天的同域名页</label><label><input type="checkbox" name="cleanTemporary"> 清理临时页、休眠页和 New Tab</label><label><input type="checkbox" name="expire"> 关闭过期页</label><label><input type="checkbox" name="sort"> 自动排序</label></div>
+        <p class="hint">“立即整理一次”无需启用自动维护，也无需等待浏览器空闲或交互/观察满30秒；运行后保持原启用状态。仍需窗口隔离验证并保留当前、固定、有输入、媒体、恢复冷却等保护。点击暂停或继续操作网页可中止本次整理。</p>
+        <p class="hint">自动关闭每小时检查一次：同一 Git 站点、同一完整仓库项目保留最近访问的一页，其余安全页面关闭，不等1天或7天；不同项目、不同Git站点分别保留。Git项目不再按同域名或网址包含合并，项目保留页不会按7天过期删除；休眠与错误清理仍优先，固定、当前、有输入等保护仍生效。其他网站同一 窗口 内忽略 id 查询参数和路径数字编号后，网址相互包含或相同的页面保留最新打开的一页，较旧且安全的副本可立即去重，不等 7 天。打开时间未知的已有页面用最近访问时间排序。另清理至少24小时未访问且有同完整主机名幸存页的标签，保留最近访问页；本轮 URL 去重保留页等下次检查再合并。交互后的整理只排序，不提前关闭页面。</p>
+        <p class="hint">休眠页、明确错误页、百度首页和浏览器内置 New Tab 每小时检查并关闭，不等1天或7天；当前页、固定页、输入与媒体等保护仍生效。其他临时页包括明确搜索结果、资讯、产品介绍和登录中转；24小时未访问即可关闭，网站只有这一页也会清理。按网址与标题规则判断，无需LLM；未知业务页面仍按其他规则处理。</p>
+        <label>未访问天数 <input type="number" name="days" min="1" max="365" step="1" required></label>
+      </section>
+      <section><h2>分类与保护规则</h2><p class="hint">以下规则按完整 JSON 数组编辑。站点别名优先，其次项目，最后主机名。所有 HTTP(S) 页面按具体状态保护；明确未加载、休眠和已知空白入口无需文档探针。旧版只读路径字段仅作配置兼容，不限制关闭范围。</p>
+        <label>站点别名组 <textarea name="aliases" spellcheck="false" rows="7"></textarea></label>
+        <label>项目规则 <textarea name="projects" spellcheck="false" rows="7"></textarea></label>
+        <label>不自动关闭的主机名 <textarea name="whitelist" spellcheck="false" rows="3"></textarea></label>
+        <label>旧版只读路径（兼容保留，不限制关闭范围） <textarea name="readOnlyRules" spellcheck="false" rows="5"></textarea></label>
+      </section>
+    </form>
+    <section><h2>维护预览</h2><div id="preview"><p>点击“预览”查看计划；预览不会修改标签页。</p></div></section>
+    <section><h2>本机关闭记录</h2><p class="hint">恢复会重新打开网址；原网页内未保存的状态无法恢复。“待确认”记录可能是关闭后写入状态时中断，仍可显式重新打开。</p><div id="history"></div></section>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>
